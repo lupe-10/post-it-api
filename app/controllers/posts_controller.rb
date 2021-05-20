@@ -30,7 +30,6 @@ class PostsController < ApplicationController
     if @post.save
       render :show
     else
-      render_error
       # cuando no lo encunetra
     end
   end
