@@ -1,23 +1,25 @@
 class PostsController < ApplicationController
-  before_action :set_character, only: %i[show create update delete]
+  before_action :set_post, only: %i[show create update delete]
   before_action :authorize_request, except: %i[index]
+  # To do check relacion con usuario
 
   def index
     if params[:query].present?
-    @posts = Post.where("title @@ ?", "%#{params[:query]}%")
+    @posts = Post.where('title @@ ?', "%#{params[:query]}%")
     # hacer el filtro
     else
-    @posts = Post.all
+      sorted_post
+    end
   end
 
-  def show 
+  def show
     # si no existe devolver mensaje de error
   end
 
   def create
     @post = Post.new(post_params)
     if @post.save
-      render ?
+      render :show
     else
       render_error
     end
@@ -26,7 +28,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.update(post_params)
     if @post.save
-      render ?
+      render :show
     else
       render_error
       # cuando no lo encunetra
@@ -58,6 +60,7 @@ class PostsController < ApplicationController
   end
 
   def sorted_post
-    @posts.sort_by{post| post.created_at}
+    @posts = Post.all
+    @posts.sort_by { post | post.created_at }
   end
 end
