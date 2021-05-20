@@ -56,4 +56,8 @@ class PostsController < ApplicationController
   render json: { errors: object.errors.full_messages },
                   status: :unprocessable_entity
   end
+
+  def sorted_post
+    @posts.sort_by{post| post.created_at}
+  end
 end
