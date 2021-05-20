@@ -1,7 +1,5 @@
 class AddColumnsToPosts < ActiveRecord::Migration[6.1]
   def change
-    t.datetime :created_at
-    t.string :image_url
-  
+    add_column :posts, :image_url, :string
   end
 end
