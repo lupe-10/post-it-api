@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    # not_found
     # si no existe devolver mensaje de error
   end
 
@@ -21,7 +22,7 @@ class PostsController < ApplicationController
     if @post.save
       render :show
     else
-      render_error
+      not_found
     end
   end
 
