@@ -5,7 +5,8 @@ class PostsController < ApplicationController
 
   def index
     if params[:query].present?
-    @posts = Post.where('title @@ ?', "%#{params[:query]}%")
+    @posts = Post.by_title 
+    @posts = Post.by_category
     # hacer el filtro
     else
       sorted_post
@@ -13,6 +14,10 @@ class PostsController < ApplicationController
   end
 
   def show
+    if @post.present?
+      render json: @post
+    else
+      render_error
     # not_found
     # si no existe devolver mensaje de error
   end
@@ -22,7 +27,7 @@ class PostsController < ApplicationController
     if @post.save
       render :show
     else
-      not_found
+      render_error
     end
   end
 
@@ -31,6 +36,7 @@ class PostsController < ApplicationController
     if @post.save
       render :show
     else
+      render_error
       # cuando no lo encunetra
     end
   end
